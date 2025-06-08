@@ -1,7 +1,4 @@
-
-import React from "react";
-// import { Github, Twitter, Linkedin, Mail } from "lucide-react";
-
+import React from "react"
 
 const Footer = () => {
   return (
@@ -32,7 +29,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

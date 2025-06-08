@@ -1,13 +1,13 @@
-
-import React from "react";
-import Layout from "@/components/layout/Layout";
-import ProfileCard from "@/components/ProfileCard";
-import TravelCard from "@/components/TravelCard";
-import BlogCard from "@/components/BlogCard";
-import SectionHeading from "@/components/SectionHeading";
-import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import Layout from "@/components/layout/Layout"
+import ProfileCard from "@/components/ProfileCard"
+import TravelCard from "@/components/TravelCard"
+import BlogCard from "@/components/BlogCard"
+import SectionHeading from "@/components/SectionHeading"
+import { ArrowRight } from "lucide-react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { client } from "@/lib/sanity"
+import { groq } from "next-sanity"
 
 const travelHighlights = [
   {
@@ -31,28 +31,65 @@ const travelHighlights = [
     description: "Hiking through the majestic valleys and mountains of one of America's most beautiful national parks.",
     date: "August 2022"
   }
-];
+]
 
-const recentPosts = [
-  {
-    id: 1,
-    image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05",
-    title: "5 Essential Tips for Solo Travelers",
-    excerpt: "Traveling alone can be intimidating, but with these tips, you'll be ready to take on the world with confidence.",
-    date: "May 15, 2023",
-    slug: "tips-for-solo-travelers"
-  },
-  {
-    id: 2,
-    image: "https://images.unsplash.com/photo-1473091534298-04dcbce3278c",
-    title: "My Favorite Photography Gear for Travel",
-    excerpt: "A comprehensive guide to the camera equipment I use to capture my travel memories around the world.",
-    date: "April 22, 2023",
-    slug: "photography-gear-for-travel"
+async function getRecentPosts() {
+  try {
+    const posts = await client.fetch(
+      groq`*[_type == "post"] | order(publishedAt desc)[0...2] {
+        _id,
+        title,
+        slug,
+        excerpt,
+        publishedAt,
+        mainImage {
+          asset->{
+            _id,
+            url
+          }
+        }
+      }`
+    )
+    return posts
+  } catch (error) {
+    console.error('Error fetching posts:', error)
+    return []
   }
-];
+}
 
-const Index = () => {
+export default async function Home() {
+  const recentPosts = await getRecentPosts()
+
+  // Fallback posts if Sanity is not set up yet
+  const fallbackPosts = [
+    {
+      _id: "1",
+      title: "5 Essential Tips for Solo Travelers",
+      excerpt: "Traveling alone can be intimidating, but with these tips, you'll be ready to take on the world with confidence.",
+      publishedAt: "2023-05-15",
+      slug: { current: "tips-for-solo-travelers" },
+      mainImage: {
+        asset: {
+          url: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05"
+        }
+      }
+    },
+    {
+      _id: "2",
+      title: "My Favorite Photography Gear for Travel",
+      excerpt: "A comprehensive guide to the camera equipment I use to capture my travel memories around the world.",
+      publishedAt: "2023-04-22",
+      slug: { current: "photography-gear-for-travel" },
+      mainImage: {
+        asset: {
+          url: "https://images.unsplash.com/photo-1473091534298-04dcbce3278c"
+        }
+      }
+    }
+  ]
+
+  const postsToShow = recentPosts.length > 0 ? recentPosts : fallbackPosts
+
   return (
     <Layout>
       <section className="mb-20">
@@ -78,7 +115,7 @@ const Index = () => {
           ))}
         </div>
         <div className="mt-10 text-center">
-          <Link to="/travel">
+          <Link href="/travel">
             <Button className="bg-white dark:bg-gray-900 border hover:bg-gray-50 dark:hover:bg-gray-800 text-foreground">
               View All Destinations <ArrowRight size={16} className="ml-2" />
             </Button>
@@ -92,19 +129,23 @@ const Index = () => {
           subtitle="Thoughts, stories and ideas about travel and more"
         />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {recentPosts.map((post) => (
+          {postsToShow.map((post) => (
             <BlogCard
-              key={post.id}
-              image={post.image}
+              key={post._id}
+              image={post.mainImage?.asset?.url || "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05"}
               title={post.title}
               excerpt={post.excerpt}
-              date={post.date}
-              slug={post.slug}
+              date={new Date(post.publishedAt).toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}
+              slug={post.slug?.current || post.slug}
             />
           ))}
         </div>
         <div className="mt-10 text-center">
-          <Link to="/blog">
+          <Link href="/blog">
             <Button className="bg-white dark:bg-gray-900 border hover:bg-gray-50 dark:hover:bg-gray-800 text-foreground">
               Read All Posts <ArrowRight size={16} className="ml-2" />
             </Button>
@@ -112,7 +153,5 @@ const Index = () => {
         </div>
       </section>
     </Layout>
-  );
-};
-
-export default Index;
+  )
+}

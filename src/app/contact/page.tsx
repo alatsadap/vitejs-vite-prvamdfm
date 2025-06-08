@@ -1,49 +1,9 @@
+import ContactForm from "@/components/ContactForm"
+import Layout from "@/components/layout/Layout"
+import SectionHeading from "@/components/SectionHeading"
+import { Mail, MapPin, Phone } from "lucide-react"
 
-import React, { useState } from "react";
-import Layout from "@/components/layout/Layout";
-import SectionHeading from "@/components/SectionHeading";
-import { Button } from "@/components/ui/button";
-import { Mail, MapPin, Phone } from "lucide-react";
-import { toast } from "@/components/ui/use-toast";
-
-const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: ""
-  });
-  
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-  
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulating form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      toast({
-        title: "Message sent!",
-        description: "Thank you for your message. I'll get back to you soon.",
-      });
-      
-      // Reset form
-      setFormData({
-        name: "",
-        email: "",
-        message: ""
-      });
-    }, 1000);
-  };
-  
+export default function Contact() {
   return (
     <Layout>
       <SectionHeading 
@@ -57,27 +17,27 @@ const Contact = () => {
                 
           <div className="space-y-6">
             <div className="flex items-start">
-            <Mail className="mr-4 text-primary" size={24} />
-            <div>
-              <h4 className="font-medium">Email</h4>
-              <p className="text-muted-foreground">email@example.com</p>
-            </div>
-            </div>
-            
-            <div className="flex items-start">
-            <MapPin className="mr-4 text-primary" size={24} />
-            <div>
-              <h4 className="font-medium">Lokasi</h4>
-              <p className="text-muted-foreground">San Francisco, Kediri</p>
-            </div>
+              <Mail className="mr-4 text-primary" size={24} />
+              <div>
+                <h4 className="font-medium">Email</h4>
+                <p className="text-muted-foreground">email@example.com</p>
+              </div>
             </div>
             
             <div className="flex items-start">
-            <Phone className="mr-4 text-primary" size={24} />
-            <div>
-              <h4 className="font-medium">Telepon</h4>
-              <p className="text-muted-foreground">(123) 456-7890</p>
+              <MapPin className="mr-4 text-primary" size={24} />
+              <div>
+                <h4 className="font-medium">Lokasi</h4>
+                <p className="text-muted-foreground">San Francisco, Kediri</p>
+              </div>
             </div>
+            
+            <div className="flex items-start">
+              <Phone className="mr-4 text-primary" size={24} />
+              <div>
+                <h4 className="font-medium">Telepon</h4>
+                <p className="text-muted-foreground">(123) 456-7890</p>
+              </div>
             </div>
           </div>
           
@@ -143,67 +103,9 @@ const Contact = () => {
         </div>
         
         <div className="lg:col-span-3 glass p-8">
-          <form onSubmit={handleSubmit}>
-            <div className="mb-6">
-              <label htmlFor="name" className="block text-sm font-medium mb-2">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className="w-full p-3 bg-background/50 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="Your name"
-              />
-            </div>
-            
-            <div className="mb-6">
-              <label htmlFor="email" className="block text-sm font-medium mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="w-full p-3 bg-background/50 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="your@email.com"
-              />
-            </div>
-            
-            <div className="mb-6">
-              <label htmlFor="message" className="block text-sm font-medium mb-2">
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                rows={6}
-                className="w-full p-3 bg-background/50 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary resize-none"
-                placeholder="Your message"
-              ></textarea>
-            </div>
-            
-            <Button 
-              type="submit" 
-              className="w-full glass hover:bg-primary/20"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? "Sending..." : "Send Message"}
-            </Button>
-          </form>
+          <ContactForm />
         </div>
       </div>
     </Layout>
-  );
-};
-
-export default Contact;
+  )
+}

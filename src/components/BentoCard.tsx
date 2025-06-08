@@ -1,14 +1,13 @@
-
-import React from "react";
-import { LucideIcon } from "lucide-react";
+import React from "react"
+import { LucideIcon } from "lucide-react"
 
 interface BentoCardProps {
-  icon?: LucideIcon;
-  title?: string;
-  description?: string;
-  className?: string;
-  children?: React.ReactNode;
-  onClick?: () => void;
+  icon?: LucideIcon
+  title?: string
+  description?: string
+  className?: string
+  children?: React.ReactNode
+  onClick?: () => void
 }
 
 const BentoCard: React.FC<BentoCardProps> = ({ 
@@ -32,7 +31,7 @@ const BentoCard: React.FC<BentoCardProps> = ({
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default BentoCard;
+export default BentoCard

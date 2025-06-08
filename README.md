@@ -1,73 +1,141 @@
-# Welcome to your Lovable project
+# Novita Intan - Next.js with Sanity CMS
 
-## Project info
+A modern travel blog website built with Next.js 14 and Sanity CMS, featuring a beautiful design and seamless content management.
 
-**URL**: https://lovable.dev/projects/e57f3def-cfa8-4e37-a96d-7fc8cb1e6fff
+## Features
 
-## How can I edit this code?
+- **Next.js 14** with App Router
+- **Sanity CMS** for content management
+- **Tailwind CSS** for styling
+- **TypeScript** for type safety
+- **Dark/Light mode** support
+- **Responsive design**
+- **Image optimization** with Next.js Image component
+- **SEO optimized**
 
-There are several ways of editing your application.
+## Getting Started
 
-**Use Lovable**
+### Prerequisites
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/e57f3def-cfa8-4e37-a96d-7fc8cb1e6fff) and start prompting.
+- Node.js 18+ 
+- npm or yarn
+- Sanity account
 
-Changes made via Lovable will be committed automatically to this repo.
+### Installation
 
-**Use your preferred IDE**
+1. Clone the repository:
+```bash
+git clone <your-repo-url>
+cd novita-intan-nextjs
+```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+2. Install dependencies:
+```bash
+npm install
+```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+3. Set up Sanity:
+```bash
+# Install Sanity CLI globally
+npm install -g @sanity/cli
 
-Follow these steps:
+# Login to Sanity
+sanity login
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Create a new Sanity project
+sanity init
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Deploy the schema
+sanity deploy
+```
 
-# Step 3: Install the necessary dependencies.
-npm i
+4. Create environment variables:
+```bash
+cp .env.local.example .env.local
+```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+Update `.env.local` with your Sanity project details:
+```
+NEXT_PUBLIC_SANITY_PROJECT_ID=your-project-id
+NEXT_PUBLIC_SANITY_DATASET=production
+```
+
+5. Run the development server:
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+6. Start Sanity Studio (in a separate terminal):
+```bash
+sanity start
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Project Structure
 
-**Use GitHub Codespaces**
+```
+src/
+├── app/                 # Next.js App Router pages
+├── components/          # React components
+├── lib/                # Utility functions and Sanity client
+└── schemas/            # Sanity schema definitions
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+schemas/                # Sanity schema files
+├── author.ts
+├── blockContent.ts
+├── category.ts
+├── index.ts
+└── post.ts
+```
 
-## What technologies are used for this project?
+## Sanity Setup
 
-This project is built with:
+1. Go to [sanity.io](https://sanity.io) and create an account
+2. Create a new project
+3. Copy your project ID and dataset name
+4. Update your `.env.local` file
+5. Run `sanity deploy` to deploy your schema
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Content Management
 
-## How can I deploy this project?
+Access your Sanity Studio at `http://localhost:3333` to:
+- Create and manage blog posts
+- Add authors and categories
+- Upload and manage images
+- Preview content changes
 
-Simply open [Lovable](https://lovable.dev/projects/e57f3def-cfa8-4e37-a96d-7fc8cb1e6fff) and click on Share -> Publish.
+## Deployment
 
-## Can I connect a custom domain to my Lovable project?
+### Deploy to Vercel
 
-Yes, you can!
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Add environment variables in Vercel dashboard
+4. Deploy
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Deploy Sanity Studio
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+```bash
+sanity deploy
+```
+
+Your studio will be available at `https://your-project-name.sanity.studio`
+
+## Customization
+
+- Update the color scheme in `tailwind.config.ts`
+- Modify components in `src/components/`
+- Add new Sanity schemas in `schemas/`
+- Customize the layout in `src/components/layout/`
+
+## Technologies Used
+
+- **Next.js 14** - React framework
+- **Sanity** - Headless CMS
+- **Tailwind CSS** - Utility-first CSS framework
+- **TypeScript** - Type safety
+- **Radix UI** - Accessible UI components
+- **Lucide React** - Icon library
+
+## License
+
+This project is licensed under the MIT License.

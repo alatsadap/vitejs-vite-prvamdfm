@@ -1,34 +1,25 @@
+"use client"
 
-import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Sun, Moon, Menu, X } from "lucide-react";
-import { cn } from "@/lib/utils";
+import React, { useState, useEffect } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { Sun, Moon, Menu, X } from "lucide-react"
+import { useTheme } from "next-themes"
+import { cn } from "@/lib/utils"
 
 const Navbar = () => {
-  const [darkMode, setDarkMode] = useState<boolean>(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
-  const location = useLocation();
+  const { theme, setTheme } = useTheme()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
+  const [mounted, setMounted] = useState(false)
+  const pathname = usePathname()
 
   useEffect(() => {
-    // Check if user preference exists in localStorage
-    const isDarkMode = localStorage.getItem("darkMode") === "true";
-    setDarkMode(isDarkMode);
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-    }
-  }, []);
+    setMounted(true)
+  }, [])
 
   const toggleDarkMode = () => {
-    const newMode = !darkMode;
-    setDarkMode(newMode);
-    localStorage.setItem("darkMode", newMode.toString());
-    
-    if (newMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  };
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
 
   const navLinks = [
     { path: "/", label: "Home" },
@@ -36,16 +27,20 @@ const Navbar = () => {
     { path: "/travel", label: "Travel" },
     { path: "/blog", label: "Blog" },
     { path: "/contact", label: "Contact" }
-  ];
+  ]
 
   const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
+    setMobileMenuOpen(!mobileMenuOpen)
+  }
+
+  if (!mounted) {
+    return null
+  }
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
       <nav className="glass mx-4 my-4 px-6 py-4 flex items-center justify-between md:mx-6 lg:mx-9 max-w-4xl xl:mx-auto">
-        <Link to="/" className="font-bold text-xl">
+        <Link href="/" className="font-bold text-xl">
           <span className="text-primary">Novita</span>intan
         </Link>
 
@@ -54,10 +49,10 @@ const Navbar = () => {
           {navLinks.map((link) => (
             <Link
               key={link.path}
-              to={link.path}
+              href={link.path}
               className={cn(
                 "nav-link",
-                location.pathname === link.path ? "text-primary" : ""
+                pathname === link.path ? "text-primary" : ""
               )}
             >
               {link.label}
@@ -71,7 +66,7 @@ const Navbar = () => {
             className="p-2 rounded-full hover:bg-secondary/50 transition-colors"
             aria-label="Toggle dark mode"
           >
-            {darkMode ? (
+            {theme === 'dark' ? (
               <Sun size={20} className="text-foreground" />
             ) : (
               <Moon size={20} className="text-foreground" />
@@ -100,10 +95,10 @@ const Navbar = () => {
             {navLinks.map((link) => (
               <Link
                 key={link.path}
-                to={link.path}
+                href={link.path}
                 className={cn(
                   "nav-link block py-2",
-                  location.pathname === link.path ? "text-primary" : ""
+                  pathname === link.path ? "text-primary" : ""
                 )}
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -114,7 +109,7 @@ const Navbar = () => {
         </div>
       )}
     </header>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

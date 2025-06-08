@@ -1,9 +1,12 @@
-import React, { useState } from "react";
-import { Instagram, Mail, MapPin, ChevronLeft, ChevronRight } from "lucide-react";
-import BentoCard from "./BentoCard";
+"use client"
+
+import React, { useState } from "react"
+import { Instagram, Mail, MapPin, ChevronLeft, ChevronRight } from "lucide-react"
+import BentoCard from "./BentoCard"
+import Image from "next/image"
 
 const ProfileCard = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0)
   
   const slides = [
     {
@@ -18,15 +21,15 @@ const ProfileCard = () => {
       image: "/album/novita_3.jpg",
       title: "Profile Photo 3"
     }
-  ];
+  ]
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
+    setCurrentSlide((prev) => (prev + 1) % slides.length)
+  }
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
+  }
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -34,10 +37,11 @@ const ProfileCard = () => {
         {/* Profile Photo Carousel - Full width on mobile, spans 2 columns on desktop */}
         <BentoCard className="md:col-span-2 md:row-span-2 !p-0 !m-0 overflow-hidden h-64 md:h-full flex">
           <div className="relative w-full h-full flex-1">
-            <img
+            <Image
               src={slides[currentSlide].image}
               alt={slides[currentSlide].title}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
               style={{ margin: 0, padding: 0 }}
             />
             {/* Gradient overlay hanya dari bawah */}
@@ -108,7 +112,7 @@ const ProfileCard = () => {
         </BentoCard>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProfileCard;
+export default ProfileCard

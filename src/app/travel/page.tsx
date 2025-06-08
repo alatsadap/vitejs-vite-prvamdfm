@@ -1,10 +1,8 @@
-
-import React, { useState } from "react";
-import Layout from "@/components/layout/Layout";
-import SectionHeading from "@/components/SectionHeading";
-import TravelCard from "@/components/TravelCard";
-import RoadTimeline from "@/components/RoadTimeline";
-import { Button } from "@/components/ui/button";
+import Layout from "@/components/layout/Layout"
+import SectionHeading from "@/components/SectionHeading"
+import TravelCard from "@/components/TravelCard"
+import RoadTimeline from "@/components/RoadTimeline"
+import TravelGrid from "@/components/TravelGrid"
 
 const travelDestinations = [
   {
@@ -70,15 +68,9 @@ const travelDestinations = [
     description: "Exploring both islands of New Zealand, from Hobbiton to Milford Sound and everything in between.",
     date: "February 2021"
   }
-];
+]
 
-const Travel = () => {
-  const [visible, setVisible] = useState(6);
-  
-  const loadMore = () => {
-    setVisible(prev => Math.min(prev + 3, travelDestinations.length));
-  };
-  
+export default function Travel() {
   return (
     <Layout>
       <SectionHeading 
@@ -95,27 +87,7 @@ const Travel = () => {
         <RoadTimeline />
       </section>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {travelDestinations.slice(0, visible).map((destination) => (
-          <TravelCard
-            key={destination.id}
-            image={destination.image}
-            title={destination.title}
-            description={destination.description}
-            date={destination.date}
-          />
-        ))}
-      </div>
-      
-      {visible < travelDestinations.length && (
-        <div className="mt-10 text-center">
-          <Button onClick={loadMore} className="glass hover:bg-primary/20">
-            Load More
-          </Button>
-        </div>
-      )}
+      <TravelGrid destinations={travelDestinations} />
     </Layout>
-  );
-};
-
-export default Travel;
+  )
+}

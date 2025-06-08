@@ -1,23 +1,23 @@
-
-import React from "react";
-import { Calendar } from "lucide-react";
+import React from "react"
+import { Calendar } from "lucide-react"
+import Image from "next/image"
 
 interface TravelCardProps {
-  image: string;
-  title: string;
-  description: string;
-  date: string;
+  image: string
+  title: string
+  description: string
+  date: string
 }
 
 const TravelCard: React.FC<TravelCardProps> = ({ image, title, description, date }) => {
   return (
     <div className="glass overflow-hidden group">
-      <div className="h-48 overflow-hidden">
-        <img
+      <div className="h-48 overflow-hidden relative">
+        <Image
           src={image}
           alt={title}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-          loading="lazy"
+          fill
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
       </div>
       <div className="p-6">
@@ -29,7 +29,7 @@ const TravelCard: React.FC<TravelCardProps> = ({ image, title, description, date
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TravelCard;
+export default TravelCard

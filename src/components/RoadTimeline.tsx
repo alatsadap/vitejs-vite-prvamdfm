@@ -1,14 +1,16 @@
+"use client"
 
-import React, { useEffect, useRef, useState } from "react";
-import { MapPin, Calendar } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react"
+import { MapPin, Calendar } from "lucide-react"
+import Image from "next/image"
 
 interface TimelineItem {
-  id: number;
-  destination: string;
-  country: string;
-  date: string;
-  description: string;
-  image: string;
+  id: number
+  destination: string
+  country: string
+  date: string
+  description: string
+  image: string
 }
 
 const timelineData: TimelineItem[] = [
@@ -52,30 +54,30 @@ const timelineData: TimelineItem[] = [
     description: "Cherry blossoms and ancient temples",
     image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07"
   }
-];
+]
 
 const RoadTimeline = () => {
-  const [visibleItems, setVisibleItems] = useState<number[]>([]);
-  const timelineRef = useRef<HTMLDivElement>(null);
+  const [visibleItems, setVisibleItems] = useState<number[]>([])
+  const timelineRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const id = parseInt(entry.target.getAttribute('data-id') || '0');
-            setVisibleItems(prev => [...new Set([...prev, id])]);
+            const id = parseInt(entry.target.getAttribute('data-id') || '0')
+            setVisibleItems(prev => [...new Set([...prev, id])])
           }
-        });
+        })
       },
       { threshold: 0.3 }
-    );
+    )
 
-    const items = timelineRef.current?.querySelectorAll('.timeline-item');
-    items?.forEach(item => observer.observe(item));
+    const items = timelineRef.current?.querySelectorAll('.timeline-item')
+    items?.forEach(item => observer.observe(item))
 
-    return () => observer.disconnect();
-  }, []);
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <div ref={timelineRef} className="relative max-w-4xl mx-auto py-8">
@@ -112,12 +114,12 @@ const RoadTimeline = () => {
           }`}>
             <div className="flex flex-col md:flex-row gap-6">
               {/* Image */}
-              <div className="w-full md:w-48 h-32 rounded-lg overflow-hidden flex-shrink-0">
-                <img
+              <div className="w-full md:w-48 h-32 rounded-lg overflow-hidden flex-shrink-0 relative">
+                <Image
                   src={item.image}
                   alt={item.destination}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  loading="lazy"
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
 
@@ -157,7 +159,7 @@ const RoadTimeline = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default RoadTimeline;
+export default RoadTimeline

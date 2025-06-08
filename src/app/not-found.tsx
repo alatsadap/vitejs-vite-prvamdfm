@@ -1,10 +1,8 @@
+import Layout from "@/components/layout/Layout"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
-import React from "react";
-import Layout from "@/components/layout/Layout";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-
-const NotFound = () => {
+export default function NotFound() {
   return (
     <Layout>
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
@@ -14,7 +12,7 @@ const NotFound = () => {
           <p className="text-muted-foreground mb-8">
             Halaman yang Anda cari tidak ditemukan atau telah dipindahkan.
           </p>
-          <Link to="/">
+          <Link href="/">
             <Button className="glass hover:bg-primary/20">
               Kembali ke Beranda
             </Button>
@@ -22,7 +20,5 @@ const NotFound = () => {
         </div>
       </div>
     </Layout>
-  );
-};
-
-export default NotFound;
+  )
+}

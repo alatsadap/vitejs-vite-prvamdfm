@@ -1,25 +1,25 @@
-
-import React from "react";
-import { Calendar, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import React from "react"
+import { Calendar, ArrowRight } from "lucide-react"
+import Link from "next/link"
+import Image from "next/image"
 
 interface BlogCardProps {
-  image: string;
-  title: string;
-  excerpt: string;
-  date: string;
-  slug: string;
+  image: string
+  title: string
+  excerpt: string
+  date: string
+  slug: string
 }
 
 const BlogCard: React.FC<BlogCardProps> = ({ image, title, excerpt, date, slug }) => {
   return (
     <div className="bg-white dark:bg-gray-900 border rounded-xl overflow-hidden h-full flex flex-col group hover:shadow-lg transition-all duration-300">
-      <div className="h-48 overflow-hidden">
-        <img
+      <div className="h-48 overflow-hidden relative">
+        <Image
           src={image}
           alt={title}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-          loading="lazy"
+          fill
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
       </div>
       <div className="p-6 flex-grow flex flex-col">
@@ -31,7 +31,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ image, title, excerpt, date, slug }
             <span>{date}</span>
           </div>
           <Link 
-            to={`/blog/${slug}`}
+            href={`/blog/${slug}`}
             className="flex items-center text-primary hover:underline transition-colors"
           >
             Read More <ArrowRight size={16} className="ml-1" />
@@ -39,7 +39,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ image, title, excerpt, date, slug }
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default BlogCard;
+export default BlogCard
